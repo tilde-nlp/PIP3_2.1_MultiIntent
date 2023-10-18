@@ -38,9 +38,9 @@ Each model is a classifier with two output classes that predicts if there is a p
 
 ### Version 1 - Single Multi-Intent Model with Many Dense layers
 
-All models are joined in a single model with a common convolution layer and n dense layers with 2 units for each intent. Like with the previous
+All models are joined in a single model with a common convolution layer and *n* dense layers with 2 units for each intent. Like with the previous
 approach, each of the dense layers has 2 output classes - either the intent exists or not. Outputs of the dense layers are concatenated, thus the output size of the concatenation
-layer is 2 × n. The next Lambda layer throws out every other output leaving only those who signalize the existence of the intent.
+layer is 2 × *n*. The next Lambda layer throws out every other output leaving only those who signalize the existence of the intent.
 
 ![1.png](1.png)
 
@@ -49,9 +49,16 @@ layer is 2 × n. The next Lambda layer throws out every other output leaving onl
 For this architecture, we use a common dense layer for all intents, but instead of the softmax activation function we use the sigmoid activation function that allows us to
 detect if an intent is in an utterance regardless of other intents.
 
+![2.png](2.png)
+
 ## Results
 
+Version 0 approach can be slow if there are many intents in the data as it is necessary to train (and support) *n* individual classifiers. Version 1 is faster than having to train individual models for each intent. However, the middle layer consists of many independent layers that are relatively slow.  Experiments showed that the best-performing architecture for the multi-intent classification was Version 2 model. It allowed to achieve the highest accuracy scores with acceptable training times.
 
+In single-intent models, we assumed that the correct intent is the one with the top confidence value that is larger than 0.5. As we have replaced the softmax activation with the
+sigmoid activation in our final architecture (Version 2), the sum of confidence scores for all intents does not have to be 1.0. Therefore, we need to establish threshold value t ∈ [0, 1]. If the confidence value for an intent returned by the model is above the threshold, we can accept that there is such an intent in the example. The threshold value for multi-intent models can be induced from cross-validation results for each individual dataset. For our sample dataset, the best F1 value of 0.955 is achieved with the threshold set at 0.12.
+
+![results.png](results.png)
 
 ## Acknowledgment
 This prototype is created in activity 2.1 of the project "AI Assistant for Multilingual Meeting Management" (No. of the Contract/Agreement: 1.1.1.1/19/A/082).
