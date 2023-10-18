@@ -4,7 +4,7 @@ Scripts for training the Multi-intent detection model
 ## Usage
 To train the Multi-intent detection model the train and test data must be prepared. The data are included in the two column TAB separated file. Each line contains an utterance example in the first column and the intent identifier in the second column.
 
-Training is performed with the script ![run_training.py](run_training.py). All infomation used for the training is specified in the ![config.ini](config.ini) file.
+Training is performed with the script [run_training.py](run_training.py). All infomation used for the training is specified in the [config.ini](config.ini) file.
 
 Parameters in the *config.ini* file:
 
