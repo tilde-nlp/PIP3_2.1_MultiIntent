@@ -27,6 +27,8 @@ Folder *DataVectorizing* contains class for connecting to FastText vectorizer.
 
 Folder *ResultStats* contains functions for statistics calculation.
 
+Folder *VectorizerService* contains Docker container code for starting fastText vectorizer service.
+
 ## Architecture
 We have implemented 3 different multi-intent detection models
 
